@@ -248,7 +248,12 @@ function onTap(id) {
     renderDots();
   } else {
     const key = [selected, id].sort().join('-');
-    if (!connections.some(c => [...c].sort().join('-') === key)) {
+    const existingIndex = connections.findIndex(c => [...c].sort().join('-') === key);
+    if (existingIndex !== -1) {
+      // 既存の線を削除
+      connections.splice(existingIndex, 1);
+    } else {
+      // 新しい線を追加
       connections.push([selected, id]);
     }
     selected = null;
